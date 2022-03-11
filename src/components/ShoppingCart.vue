@@ -1,20 +1,36 @@
 <template>
-    <div id="ShoppingCart" class="bg-gray-200 h-128 w-64 rounded-2xl border border-gray-500">
-        
-        <div class="m-5 flex flex-col">
-            <span class="font-semibold"> Название </span>
-            <div class="">
+    <div id="ShoppingCart" class="bg-gray-200 h-128 w-64 rounded-2xl border border-gray-300" >
+        <div class="text-center w-full">
+            <span class="font-extrabold text-xl text-gray-700 "> Корзина</span>
+        </div>
+        <div class="h-10/12 overflow-y-scroll overflow-x-hidden">
+            <CartItem 
+                v-on:remove-item="removeItem"
+                v-for="i of items" :key="i"
+                v-bind:item="i"/>
+        </div>
+        <div class="inline-flex mt-2"> 
+            <div class="m-2">
+                <span class="font-extrabold"> Итого: </span>
                 <span class="font-thin opacity-70">{{300}}р. </span>
-                <button class="text-2xl"> - </button>
-                <input type="number" name="" value="0" id="" class="w-8 text-gray-500/50 rounded-1xl center ml-3 mr-3 text-center">
-                <button class="text-2xl"> + </button>
             </div>
+            <button class="bg-light-100 font-thin w-25 rounded-2xl border"> Оплатить </button>
         </div>
     </div>
 </template>
-<script>
-export default {
 
+<script>
+import CartItem from '@/components/CartItem.vue'
+export default {
+    props: ['items'],
+    components: {
+        CartItem
+    },
+    methods: {
+        removeItem(id){
+            console.log(id)
+        }
+    }
 }
 
 </script>

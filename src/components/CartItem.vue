@@ -43,28 +43,28 @@ export default {
   props: ["item"],
   data() {
     return {
-      count: 1,
+      // count: 1,
     };
   },
   methods: {
-      plus() {
-          this.count += 1;
-          // To parent
-      },
-      minus() {
-          if (this.count == 1)
-            this.$emit('remove-item', this.item.id)
-          else{
-            this.count -= 1;
-            // To parent
-          }
-      }
+    plus() {
+      this.$emit("add-item", this.item.id);
+    },
+    minus() {
+      this.$emit("reduce-item", this.item.id);
+    },
   },
   computed: {
-      salamary: function () {
-          let temp = this.count * this.item.price; 
-          return temp.toFixed(2);
-      }
-  }
+    count: function () {
+      if (this.item.count == null) return 0;
+      return this.item.count;
+    },
+    salamary: function () {
+      let count = 0;
+      if (this.item.count != null) count = this.item.count;
+      let temp = count * this.item.price;
+      return temp.toFixed(2);
+    },
+  },
 };
 </script>

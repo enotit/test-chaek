@@ -42,9 +42,7 @@
 export default {
   props: ["item"],
   data() {
-    return {
-      // count: 1,
-    };
+    return {};
   },
   methods: {
     plus() {

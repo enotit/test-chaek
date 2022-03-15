@@ -1,15 +1,14 @@
 <template>
-  <div class="">
-      <CategoryFilter class="" :categories="categories" />
-    </div>
-  <div class="">
+  <div class="float-left z-2">
+    <CategoryFilter class="" :categories="categories" />
+  </div>
+  <div class="float-right z-2">
     <ShoppingCart class="" v-if="items != null" :items="items" />
-    <img src="./assets/loading.gif" alt="" v-else>
+    <img src="./assets/loading.gif" alt="" v-else />
   </div>
-  <div>
-    <AssortimentProducts :items="items"/>
+  <div class="absolute ml-90">
+    <AssortimentProducts :items="items" :categories="categories" />
   </div>
-  
 </template>
 
 <script>
@@ -23,32 +22,42 @@ export default {
   data() {
     return {
       items: null,
+      categories: null,
     };
   },
   components: {
     CategoryFilter,
     ShoppingCart,
-    AssortimentProducts
+    AssortimentProducts,
+  },
+  methods: {
+    checkCategories: function () {
+      if (this.items == null) return;
+      let temp = [];
+      this.items.forEach((i) => {
+        if (temp.find((x) => x.category == i.category) == null)
+          temp.push({ category: i.category, selected: false });
+      });
+      this.categories = temp;
+    },
   },
   beforeCreate() {
     axios
       .get("https://fakestoreapi.com/products")
-      .then((response) => (this.items = response.data))
+      .then((response) => {
+        this.items = response.data;
+        let temp = [];
+        this.items.forEach((i) => {
+          if (temp.find((x) => x.category == i.category) == null)
+            temp.push({ category: i.category, selected: false });
+        });
+        this.categories = temp;
+      })
       .catch((error) => {
         alert(error);
       });
   },
-  computed: {
-    categories: function(){
-      if (this.items == null) return null;
-      let temp = [];
-      this.items.forEach((i) => {
-        if (temp.find(x=> x.category == i.category) == null)
-          temp.push({category: i.category, selected: false});
-      });
-      return temp;
-    }
-  }
+  computed: {},
 };
 </script>
 
@@ -60,6 +69,7 @@ body {
   outline: none;
   font-family: "Montserrat", sans-serif;
   user-select: none;
+  outline: 0; outline-offset: 0;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

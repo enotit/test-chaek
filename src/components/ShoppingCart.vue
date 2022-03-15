@@ -1,7 +1,7 @@
 <template>
   <div
     id="ShoppingCart"
-    class="bg-gray-200 h-128 w-64 rounded-2xl border border-gray-300"
+    class="bg-gray-200 h-128 w-64 rounded-l-3xl border border-gray-300"
   >
     <div class="text-center w-full">
       <span class="font-extrabold text-xl text-gray-700"> Корзина</span>
@@ -11,7 +11,7 @@
         <CartItem
           @reduce-item="reduceItem"
           @add-item="addItem"
-          v-for="i of items.filter(x => x.count != null)"
+          v-for="i of items.filter((x) => x.count != null)"
           :key="i"
           :item="i"
         />
@@ -22,7 +22,10 @@
         <span class="font-extrabold"> Итого: </span>
         <span class="font-thin opacity-70">{{ salamary }}р. </span>
       </div>
-      <button class="bg-light-100 font-thin w-25 rounded-2xl border" @click="msg()">
+      <button
+        class="bg-light-100 font-thin w-25 rounded-2xl border"
+        @click="msg()"
+      >
         Оплатить
       </button>
     </div>
@@ -49,8 +52,8 @@ export default {
       temp.count = temp.count == null ? 1 : temp.count + 1;
     },
     msg() {
-        alert('Это вымышленный магазин, что оплатить хочешь?')
-    }
+      alert("Это вымышленный магазин, что оплатить хочешь?");
+    },
   },
   computed: {
     salamary: function () {
